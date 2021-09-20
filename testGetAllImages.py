@@ -7,8 +7,17 @@ imageFolder = "\Camera Roll" #folder with all the images
 imageFolderPath = os.getcwd()+ imageFolder
 imageFolderPath.encode('unicode_escape')
 
-print (imageFolderPath)
+#print (imageFolderPath)
 
 images = getAllImages(imageFolderPath)
 
-print(images)
+imagesRel = []
+
+for image in images:
+    image = os.path.relpath(image, imageFolderPath)
+    imagesRel.append(image)
+
+    
+
+
+print(imagesRel)

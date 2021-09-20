@@ -3,8 +3,18 @@ import os
 
 def getAllImages(imageFolder):
     images = []
-    for file in os.listdir(imageFolder):
-        if file.endswith(".jpg") or file.endswith(".png") or file.endswith('.jpeg'): # might need to change depending on format of images
-            images.append(os.path.join(imageFolder,file))
+
+    for path, subdirs, files in os.walk(imageFolder):
+        for name in files:
+
+            if name.endswith(".jpg") or name.endswith(".png") or name.endswith('.jpeg'): # might need to change depending on format of images
+                images.append(os.path.join(path,name))
+            #print(os.path.join(path, name))
+            #print(os.path.relpath(path, imageFolderPath))
+
+    
+    
+
+
 
     return images
