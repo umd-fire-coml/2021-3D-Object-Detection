@@ -1,5 +1,9 @@
-from getAllImagesFunction import *
 import os
+import pathlib
+
+from  getAllImagesFunction import getAllImages
+
+
 
 
 imageFolder = "\data_test_getAllImages" #folder with all the images
@@ -20,4 +24,4 @@ for image in images:
     
 
 
-print(imagesRel)
+assert len(imagesRel) == 2
