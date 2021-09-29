@@ -1,4 +1,4 @@
-from getAllImagesFunction import *
+from src.getAllImagesFunction import *
 import os
 
 

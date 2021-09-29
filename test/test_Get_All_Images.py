@@ -1,7 +1,7 @@
 import os
 import pathlib
 
-from  getAllImagesFunction import getAllImages
+from  src.getAllImagesFunction import getAllImages
 
 
 
