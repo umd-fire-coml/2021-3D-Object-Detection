@@ -1,4 +1,5 @@
 import os
+import test
 import pathlib
 import sys
 sys.path.insert(0, './src')
@@ -6,23 +7,23 @@ sys.path.insert(0, './src')
 from  src.getAllImagesFunction import getAllImages
 
 
-imageFolder = r"\getAllImagesFolder" #folder with all the images
+def test_images():
+    imageFolder = r"\getAllImagesFolder" #folder with all the images
 
-imageFolderPath = os.getcwd()+ imageFolder
-imageFolderPath.encode('unicode_escape')
+    imageFolderPath = os.getcwd()+ imageFolder
+    imageFolderPath.encode('unicode_escape')
 
-print (imageFolderPath)
+    print (imageFolderPath)
 
-images = getAllImages(imageFolderPath)
+    images = getAllImages(imageFolderPath)
 
-imagesRel = []
+    imagesRel = []
 
-for image in images:
-    image = os.path.relpath(image, imageFolderPath)
-    imagesRel.append(image)
+    for image in images:
+        image = os.path.relpath(image, imageFolderPath)
+        imagesRel.append(image)
 
     
-print(len(imagesRel))
-assert len(imagesRel) == 0
-assert True
+    print(len(imagesRel))
+    assert len(imagesRel) == 2
 
