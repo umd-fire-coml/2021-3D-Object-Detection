@@ -4,10 +4,11 @@ import pathlib
 import sys
 sys.path.insert(0, './src')
 
-from  src.getAllImagesFunction import getAllImages
+from  getAllImagesFunction import getAllImages
 
 
 def test_images():
+    
     imageFolder = r"\getAllImagesFolder" #folder with all the images
 
     imageFolderPath = os.getcwd()+ imageFolder
