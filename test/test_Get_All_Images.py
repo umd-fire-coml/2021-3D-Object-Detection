@@ -6,12 +6,12 @@ from  src.getAllImagesFunction import getAllImages
 
 
 
-imageFolder = "\\data_test_getAllImages" #folder with all the images
+imageFolder = "\getAllImagesFolder" #folder with all the images
 
 imageFolderPath = os.getcwd()+ imageFolder
 imageFolderPath.encode('unicode_escape')
 
-#print (imageFolderPath)
+print (imageFolderPath)
 
 images = getAllImages(imageFolderPath)
 
@@ -22,6 +22,6 @@ for image in images:
     imagesRel.append(image)
 
     
-
-
+#print(len(imagesRel))
 assert len(imagesRel) == 2
+

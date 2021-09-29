@@ -2,12 +2,12 @@ from src.getAllImagesFunction import *
 import os
 
 
-imageFolder = "\data_test_getAllImages" #folder with all the images
+imageFolder = "\getAllImagesFolder" #folder with all the images
 
 imageFolderPath = os.getcwd()+ imageFolder
 imageFolderPath.encode('unicode_escape')
 
-#print (imageFolderPath)
+print (imageFolderPath)
 
 images = getAllImages(imageFolderPath)
 
