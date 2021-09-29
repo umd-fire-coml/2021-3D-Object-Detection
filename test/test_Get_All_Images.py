@@ -3,9 +3,7 @@ import pathlib
 import sys
 sys.path.insert(0, './src')
 
-from  getAllImagesFunction import getAllImages
-
-
+from  src.getAllImagesFunction import getAllImages
 
 
 imageFolder = r"\getAllImagesFolder" #folder with all the images
@@ -25,6 +23,6 @@ for image in images:
 
     
 print(len(imagesRel))
-assert len(imagesRel) == 2
+assert len(imagesRel) == 0
 assert True
 
