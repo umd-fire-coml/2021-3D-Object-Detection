@@ -1,4 +1,5 @@
 from download.accelerator import DownloadAccelerator
+import pathlib
 
 def download_all_datasets():
     datasets = {
@@ -9,5 +10,10 @@ def download_all_datasets():
     }
 
     for output, link in datasets.items():
+        parent = pathlib.Path(output).parent
+
+        if not parent.exists():
+            parent.mkdir(parents=True)
+
         accelerator = DownloadAccelerator(link, output)
         accelerator.start()
