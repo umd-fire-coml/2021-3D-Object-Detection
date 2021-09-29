@@ -6,7 +6,7 @@ from  getAllImagesFunction import getAllImages
 
 
 
-imageFolder = "\data_test_getAllImages" #folder with all the images
+imageFolder = "\\data_test_getAllImages" #folder with all the images
 
 imageFolderPath = os.getcwd()+ imageFolder
 imageFolderPath.encode('unicode_escape')
