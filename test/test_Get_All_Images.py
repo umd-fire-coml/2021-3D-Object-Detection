@@ -1,7 +1,9 @@
 import os
 import pathlib
+import sys
+sys.path.insert(0, './src')
 
-from  src.getAllImagesFunction import getAllImages
+from  getAllImagesFunction import getAllImages
 
 
 
@@ -22,7 +24,7 @@ for image in images:
     imagesRel.append(image)
 
     
-#print(len(imagesRel))
-#assert len(imagesRel) == 2
+print(len(imagesRel))
+assert len(imagesRel) == 2
 assert True
 
