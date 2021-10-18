@@ -1,6 +1,10 @@
 import numpy as np
 import os
 from tensorflow.keras.utils import Sequence
+from cvtToPCDFunction import convert_kitti_bin_to_pcd
+import open3d as o3d
+from open3d import *
+from segmentPoints import*
 
 class DataGenerator(Sequence):
     '''this is a random data generator, edit this data generator to read data from dataset folder and return a batch with __getitem__'''
@@ -13,14 +17,14 @@ class DataGenerator(Sequence):
         self.indexes = np.arange(self.n_dataset_items)
         self.on_epoch_end()
         
-        # DELETE THIS WHEN USING YOUR OWN DATASET, DO NOT STORE THE ACTUAL DATASET IN MEMEORY HERE
-        #self.X_DATASET = [np.random.rand(*self.x_shape) for i in range(self.n_dataset_items)] 
-        #self.Y_DATASET = [np.random.rand(*self.y_shape) for i in range(self.n_dataset_items)]
+    
 
 
-        # Use get all images function that are type of .bin
-       # self.x_filepaths = os.listdir('./test/data/images')
-       # self.y_labels = np.genfromtxt('./test/data/image_labels.txt', dtype = 'int')
+        # Use getAllImages function to get all images that are type .bin
+        self.x_filepaths = os.listdir('./test/data/images')
+
+        #use getAllImages function to get all labels that are type .label
+        self.y_labels = np.genfromtxt('./test/data/image_labels.txt', dtype = 'int')
 
         self.X_DATASET = self.x_filepaths
         self.Y_DATASET = self.y_labels
@@ -43,9 +47,24 @@ class DataGenerator(Sequence):
         # Generate indexes of the batch
         indexes = self.indexes[index * self.batch_size : (index + 1) * self.batch_size]
 
+        x =  0 #minRandom + (random() * (maxRandom - minRandom))
+        y =  0 #minRandom + (random() * (maxRandom - minRandom))
+        z =  0 #minRandom + (random() * (maxRandom - minRandom))
+        origin = [x, y,z]
+
+
+        boxLength = 70
+        bounds = [-boxLength/2+x, boxLength/2+x, -boxLength/2+y, boxLength/2+y, -boxLength/2+z, boxLength/2+z]
+
         # Generate data
         for i in range(self.batch_size):
-            x_batch[i,] = self.X_DATASET[indexes[i]]
+            # loads converts file into pcd data point
+            pcd = convert_kitti_bin_to_pcd(self.X_DATASET[indexes[i]])
+
+            #converts to array and filters to 70, 70, 70
+            x_batch[i,] = get_filtered_lidar(np.asarray(pcd.points), bounds)
+
+
             y_batch[i,] = self.Y_DATASET[indexes[i]]
 
         # Return batch data

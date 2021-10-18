@@ -9,42 +9,6 @@ def cvtToPCD(myList):
     customPoints.points = open3d.utility.Vector3dVector(myList)
 
     return customPoints
-    
-
-
-def getSegments(pcd, bounds):
-    #bounds will be array of x min, x max, y min, y max
-    result_segments = []
-
-    originalArray = np.asarray(pcd.points)
-
-    inboundsArray = []
-
-    index = 0
-    while index < originalArray.shape[0]:
-        x = originalArray[index][0]
-        y = originalArray[index][1]
-        if(x >bounds[0] and x<bounds[1] and y> bounds[2] and y< bounds[3] ) :
-
-            
-            inboundsArray.append(originalArray[index])
-
-        index= index +1
-
-
-    return inboundsArray
-
-def shrinkArray(array, factor):
-    result_array = []
-
-    index = 0
-    while index < len(array):
-        if(index % factor == 0) :
-            result_array.append(array[index])
-        index = index +1
-
-    return result_array
-
 
 
 def get_filtered_lidar(lidar, boundary, labels=None):
