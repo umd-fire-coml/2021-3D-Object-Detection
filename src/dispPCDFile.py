@@ -7,10 +7,15 @@ from random import*
 
 from segmentPoints import*
 
-pcd = convert_kitti_bin_to_pcd('C:\\Users\\fpras\\FIRE298\\2021-3D-Object-Detection\\data\\example_dataset\\sequences\\00\\velodyne\\000022.bin')
+pcd = convert_kitti_bin_to_pcd('data\\example_dataset\\sequences\\03\\velodyne\\000000.bin')
 #open3d.io.write_point_cloud("temp.pcd", temp)
 #pcd = o3d.io.read_point_cloud("temp.pcd")
 #print(pcd)
+
+
+test = convert_kitti_bin_to_pcd('data\\example_dataset\\sequences\\00\\labels\\000000.label')
+
+#print(np.asarray(test).shape)
 
 
 print(np.asarray(pcd.points).shape)

@@ -5,6 +5,7 @@ from cvtToPCDFunction import convert_kitti_bin_to_pcd
 import open3d as o3d
 from open3d import *
 from segmentPoints import*
+from getAllFiles import*
 
 class DataGenerator(Sequence):
     '''this is a random data generator, edit this data generator to read data from dataset folder and return a batch with __getitem__'''
@@ -21,10 +22,10 @@ class DataGenerator(Sequence):
 
 
         # Use getAllImages function to get all images that are type .bin
-        self.x_filepaths = os.listdir('./test/data/images')
+        self.x_filepaths = getAllFiles('data\\example_dataset\\sequences', '.bin')
 
         #use getAllImages function to get all labels that are type .label
-        self.y_labels = np.genfromtxt('./test/data/image_labels.txt', dtype = 'int')
+        self.y_labels = getAllFiles('data\\example_dataset\\sequences', '.label')
 
         self.X_DATASET = self.x_filepaths
         self.Y_DATASET = self.y_labels
