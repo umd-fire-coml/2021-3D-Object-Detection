@@ -27,11 +27,7 @@ def get_filtered_lidar(lidar, boundary, labels=None):
     lidar[:, 2] = lidar[:, 2] - minZ
 
     if labels is not None:
-        label_x = (labels[:, 1] >= minX) & (labels[:, 1] < maxX)
-        label_y = (labels[:, 2] >= minY) & (labels[:, 2] < maxY)
-        label_z = (labels[:, 3] >= minZ) & (labels[:, 3] < maxZ)
-        mask_label = label_x & label_y & label_z
-        labels = labels[mask_label]
+        labels = labels[mask]
         return lidar, labels
     else:
         return lidar

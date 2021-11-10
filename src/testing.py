@@ -50,16 +50,20 @@ def testing_filter(lidar, boundary, labels=None):
     lidar[:, 2] = lidar[:, 2] - minZ
 
     if labels is not None:
-        label_x = (labels[:, 1] >= minX) & (labels[:, 1] < maxX)
-        label_y = (labels[:, 2] >= minY) & (labels[:, 2] < maxY)
-        label_z = (labels[:, 3] >= minZ) & (labels[:, 3] < maxZ)
-        mask_label = label_x & label_y & label_z
-        labels = labels[mask_label]
+        print(mask)
+        labels = labels[mask]
         return lidar, labels
     else:
         return lidar
 
 if __name__ == "__main__":
+
+    a = np.arange(10)
+    print
+
+    test = np.where((a >= 3) & (a <= 5))
+
+    print(test)
 
     list = []
     list2 = []
@@ -79,11 +83,6 @@ if __name__ == "__main__":
         list.append((high, low))
         list2.append(low)
     
-    list3 = [1, 2, 3, 4, 5]
-    print(np.shape(list3))
-    
-
-    
     #list = return_lower_labels(list)
     pcd = convert_kitti_bin_to_pcd('data\\example_dataset\\sequences\\00\\velodyne\\000000.bin')
 
@@ -93,4 +92,4 @@ if __name__ == "__main__":
     print(np.shape(pcd.points))
 
     #filter = get_filtered_lidar(np.asarray(pcd.points), bounds, list)
-    filter = get_filtered_lidar(np.asarray(pcd.points), bounds, list2)
+    filter = testing_filter(np.asarray(pcd.points), bounds, np.asarray(list2))
