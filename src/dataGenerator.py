@@ -1,16 +1,19 @@
 import numpy as np
 import os
+from numpy.core.fromnumeric import shape
 from tensorflow.keras.utils import Sequence
 from cvtToPCDFunction import convert_kitti_bin_to_pcd
 import open3d as o3d
 from open3d import *
 from segmentPoints import*
 from getAllFiles import*
+from readLabels import return_lower_labels
+from readLabels import convert_all_kitti
 
 class DataGenerator(Sequence):
     '''this is a random data generator, edit this data generator to read data from dataset folder and return a batch with __getitem__'''
 
-    def __init__(self, batch_size=8, x_shape=(70, 70, 70), y_shape=(1,), n_dataset_items=233):
+    def __init__(self, batch_size=8, x_shape=(150000, 3), y_shape=(150000,), n_dataset_items=233):
         self.batch_size = batch_size
         self.x_shape = x_shape
         self.y_shape = y_shape
@@ -26,6 +29,8 @@ class DataGenerator(Sequence):
 
         #use getAllImages function to get all labels that are type .label
         self.y_labels = getAllFiles('data\\example_dataset\\sequences', '.label')
+
+        print("ran")
 
         self.X_DATASET = self.x_filepaths
         self.Y_DATASET = self.y_labels
@@ -62,11 +67,29 @@ class DataGenerator(Sequence):
             # loads converts file into pcd data point
             pcd = convert_kitti_bin_to_pcd(self.X_DATASET[indexes[i]])
 
+            pcdList = np.asarray(pcd.points).tolist()
+            
+            map = convert_all_kitti(self.Y_DATASET[indexes[i]])
+            lowerLabels = (return_lower_labels(map))
+
+            print("diff is")
+            print(self.x_shape[0] - len(pcdList))
+            
+            for x in range(self.x_shape[0] - len(pcdList)):
+                pcdList.append([0,0,0])
+                lowerLabels.append(0)
+
             #converts to array and filters to 70, 70, 70
-            x_batch[i,] = get_filtered_lidar(np.asarray(pcd.points), bounds)
+            #x_batch[i,], y_batch[i,]= get_filtered_lidar(np.asarray(pcdList), bounds, np.asarray(lowerLabels))
+
+            x_batch[i, ] = np.asarray(pcdList)
+            y_batch[i, ] = np.asarray(lowerLabels)
+
+            
+            
 
 
-            y_batch[i,] = self.Y_DATASET[indexes[i]]
+            #y_batch[i,] = self.Y_DATASET[indexes[i]]
 
         # Return batch data
         return x_batch, y_batch

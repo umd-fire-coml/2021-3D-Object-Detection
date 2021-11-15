@@ -13,6 +13,7 @@ pcd = convert_kitti_bin_to_pcd('data\\example_dataset\\sequences\\03\\velodyne\\
 #print(pcd)
 
 
+
 test = convert_kitti_bin_to_pcd('data\\example_dataset\\sequences\\00\\labels\\000000.label')
 
 #print(np.asarray(test).shape)
@@ -24,6 +25,7 @@ curArray = np.asarray(pcd.points)
 
 print(curArray[0])
 print(curArray[0][0])
+
 
 
 
@@ -39,7 +41,7 @@ z =  minRandom + (random() * (maxRandom - minRandom))
 origin = [x, y,z]
 
 
-boxLength = 70
+boxLength = 10
 bounds = [-boxLength/2+x, boxLength/2+x, -boxLength/2+y, boxLength/2+y, -boxLength/2+z, boxLength/2+z]
 
 
