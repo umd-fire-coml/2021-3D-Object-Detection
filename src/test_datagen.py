@@ -19,5 +19,9 @@ x = []
 y = []
 x, y = mydatagen.__getitem__(1)
 
+
+for i in mydatagen.x_filepaths:
+    print(i)
+
 print(x.shape)
 print(y.shape)

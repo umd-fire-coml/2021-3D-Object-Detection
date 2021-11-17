@@ -13,7 +13,7 @@ from readLabels import convert_all_kitti
 class DataGenerator(Sequence):
     '''this is a random data generator, edit this data generator to read data from dataset folder and return a batch with __getitem__'''
 
-    def __init__(self, batch_size=8, x_shape=(150000, 3), y_shape=(150000,), n_dataset_items=233):
+    def __init__(self, batch_size=8, x_shape=(130000, 3), y_shape=(130000,), n_dataset_items=233):
         self.batch_size = batch_size
         self.x_shape = x_shape
         self.y_shape = y_shape
@@ -72,8 +72,8 @@ class DataGenerator(Sequence):
             map = convert_all_kitti(self.Y_DATASET[indexes[i]])
             lowerLabels = (return_lower_labels(map))
 
-            print("diff is")
-            print(self.x_shape[0] - len(pcdList))
+            #print("diff is")
+            #print(self.x_shape[0] - len(pcdList))
             
             for x in range(self.x_shape[0] - len(pcdList)):
                 pcdList.append([0,0,0])
