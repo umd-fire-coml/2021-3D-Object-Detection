@@ -30,12 +30,7 @@ def convert_all_kitti(labelFilePath):
     return map(extract_labels, integers)
 
 def return_lower_labels(list):
-    lower = []
-    for value in list:
-        high, low = value
-        lower.append(low)
-
-    return lower
+    return [value[1] for value in list]
 
 def unpack_labels(label_file_path):
     return return_lower_labels(convert_all_kitti(label_file_path))
