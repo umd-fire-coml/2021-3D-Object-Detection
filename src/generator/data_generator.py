@@ -53,10 +53,13 @@ class DataGenerator(Sequence):
 
             # loads converts file into pcd data point
             pcd = unpack_velodyne(x_file_path)
+            pcd_list = np.asarray(pcd.points).tolist()
             lower_labels = unpack_labels(y_file_path)
 
+            pcd_len = len(pcd_list)
+            labels_len = len(lower_labels)
 
-            pcd_list = np.asarray(pcd.points).tolist()
+            assert pcd_len == labels_len, f"Got different labels and pcd len: {pcd_len}, {labels_len} for filenames {x_file_path}, {y_file_path}"
 
             print(f"PCD Length: {len(pcd_list)}, Lower Labels Length: {len(lower_labels)}")
 
