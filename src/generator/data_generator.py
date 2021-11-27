@@ -50,7 +50,6 @@ class DataGenerator(Sequence):
         # Generate data
         for i in range(self.batch_size):
             x_file_path, y_file_path = (arr[indexes[i]] for arr in (self.X, self.y))
-            print(f"Using {x_file_path} and {y_file_path}")
 
             # loads converts file into pcd data point
             pcd = unpack_velodyne(x_file_path)
