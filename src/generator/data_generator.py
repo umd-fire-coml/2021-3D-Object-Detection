@@ -1,19 +1,19 @@
 from tensorflow.keras.utils import Sequence
 
 from .unpack_data import unpack_labels, unpack_velodyne
-from .utils import filter_many_by_ext
+from .index_data import build_xy_filenames
 
 import numpy as np
 
 class DataGenerator(Sequence):
-    def __init__(self, batch_size=8, x_shape=(130000, 3), y_shape=(130000,), n_dataset_items=233):
+    def __init__(self, batch_size=8, x_shape=(150000, 3), y_shape=(150000,), n_dataset_items=233):
         self.batch_size = batch_size
         self.x_shape = x_shape
         self.y_shape = y_shape
 
-        self.X, self.y = filter_many_by_ext('data/example_dataset', ('.bin', '.label'))
+        self.X, self.y = build_xy_filenames('data/example_dataset')
         assert len(self.X) == len(self.y), "X and y are of different sizes."
-        
+
         self.indexes = np.arange(len(self.X))
         
         self.on_epoch_end()
@@ -49,11 +49,17 @@ class DataGenerator(Sequence):
 
         # Generate data
         for i in range(self.batch_size):
+            x_file_path, y_file_path = (arr[indexes[i]] for arr in (self.X, self.y))
+            print(f"Using {x_file_path} and {y_file_path}")
+
             # loads converts file into pcd data point
-            pcd = unpack_velodyne(self.X[indexes[i]])
-            lower_labels = unpack_labels(self.y[indexes[i]])
+            pcd = unpack_velodyne(x_file_path)
+            lower_labels = unpack_labels(y_file_path)
+
 
             pcd_list = np.asarray(pcd.points).tolist()
+
+            print(f"PCD Length: {len(pcd_list)}, Lower Labels Length: {len(lower_labels)}")
 
 
             #print("diff is")
