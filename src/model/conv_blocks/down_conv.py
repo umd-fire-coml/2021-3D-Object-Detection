@@ -3,13 +3,13 @@ from tensorflow.python.keras.layers.normalization.batch_normalization import Bat
 
 class DownConvBlock(Layer):
     def __init__(self, num_filters, kernel_size, **kwargs):
-        super(DownConvBlock, self).__init__(kwargs)
+        super(DownConvBlock, self).__init__(**kwargs)
 
         self.num_filters = num_filters
         self.kernel_size = kernel_size
 
     def call(self, x):
-        for x in range(0, 2):
+        for i in range(0, 2):
             x = Conv3D(
                 self.num_filters, 
                 kernel_size=(
