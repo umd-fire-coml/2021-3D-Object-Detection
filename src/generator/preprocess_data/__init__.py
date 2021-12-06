@@ -11,10 +11,9 @@ def build_voxel_grids(pcd, labels, grid_dim, voxel_resolution):
 
     pcd, labels = pcd[valid_indices], labels[valid_indices]
     pcd += octant_dim
-    print(len({tuple(row) for row in pcd}))
 
     for coord, label in zip(pcd, labels):
         x_grid[tuple(coord)] = 1
         y_grid[tuple(coord)] = label
     
-    return x_grid, y_grid
+    return x_grid.reshape((grid_dim, grid_dim, grid_dim, 1)), y_grid.reshape((grid_dim, grid_dim, grid_dim, 1))

@@ -1,6 +1,8 @@
 from tensorflow.keras.layers import Activation, Conv3D, BatchNormalization, Layer
 from tensorflow.python.keras.layers.normalization.batch_normalization import BatchNormalization
 
+import numpy as np
+
 class DownConvBlock(Layer):
     def __init__(self, num_filters, kernel_size, **kwargs):
         super(DownConvBlock, self).__init__(**kwargs)
@@ -16,7 +18,8 @@ class DownConvBlock(Layer):
                     self.kernel_size, self.kernel_size, self.kernel_size
                 ),
                 padding="same",
-                kernel_initializer="he_normal"
+                kernel_initializer="he_normal",
+                data_format="channels_last"
             )(x)
             x = BatchNormalization()(x)
             x = Activation('relu')(x)

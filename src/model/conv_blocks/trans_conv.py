@@ -1,8 +1,5 @@
-from tensorflow.keras.layers import Activation, concatenate, Layer
-from tensorflow.python.keras.engine.training import concat
+from tensorflow.keras.layers import concatenate, Layer
 from tensorflow.python.keras.layers.convolutional import Conv3DTranspose
-from tensorflow.python.util import tf_contextlib
-from .down_conv import DownConvBlock
 
 
 class TransConvBlock(Layer):

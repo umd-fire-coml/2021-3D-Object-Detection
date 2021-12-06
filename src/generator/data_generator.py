@@ -8,7 +8,7 @@ from .preprocess_data import build_voxel_grids
 import numpy as np
 
 class DataGenerator(Sequence):
-    def __init__(self, batch_size=8, voxel_grid_dim=500, data_source='data/example_dataset', voxel_resolution=0.088):
+    def __init__(self, batch_size=8, voxel_grid_dim=512, data_source='data/example_dataset', voxel_resolution=0.088):
         self.batch_size = batch_size
 
         self.x_filenames, self.y_filenames = build_xy_filenames(data_source)
@@ -35,8 +35,8 @@ class DataGenerator(Sequence):
         :return: x_batch and y_batch
         """
         # Initialization
-        x_batch = np.empty((self.batch_size, self.voxel_grid_dim, self.voxel_grid_dim, self.voxel_grid_dim))
-        y_batch = np.empty((self.batch_size, self.voxel_grid_dim, self.voxel_grid_dim, self.voxel_grid_dim))
+        x_batch = np.empty((self.batch_size, self.voxel_grid_dim, self.voxel_grid_dim, self.voxel_grid_dim, 1))
+        y_batch = np.empty((self.batch_size, self.voxel_grid_dim, self.voxel_grid_dim, self.voxel_grid_dim, 1))
 
         # Generate indexes of the batch
         indexes = self.indexes[index * self.batch_size : (index + 1) * self.batch_size]

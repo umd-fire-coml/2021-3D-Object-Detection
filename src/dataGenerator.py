@@ -1,9 +1,6 @@
 import numpy as np
-import os
-from numpy.core.fromnumeric import shape
 from tensorflow.keras.utils import Sequence
 from cvtToPCDFunction import convert_kitti_bin_to_pcd
-import open3d as o3d
 from open3d import *
 from segmentPoints import*
 from getAllFiles import*
@@ -20,17 +17,12 @@ class DataGenerator(Sequence):
         self.n_dataset_items = n_dataset_items
         self.indexes = np.arange(self.n_dataset_items)
         self.on_epoch_end()
-        
-    
-
 
         # Use getAllImages function to get all images that are type .bin
-        self.x_filepaths = getAllFiles('data\\example_dataset\\sequences', '.bin')
+        self.x_filepaths = getAllFiles('data/example_dataset/sequences', '.bin')
 
         #use getAllImages function to get all labels that are type .label
-        self.y_labels = getAllFiles('data\\example_dataset\\sequences', '.label')
-
-        print("ran")
+        self.y_labels = getAllFiles('data/example_dataset/sequences', '.label')
 
         self.X_DATASET = self.x_filepaths
         self.Y_DATASET = self.y_labels

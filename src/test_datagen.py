@@ -1,5 +1,4 @@
 import os
-import pytest
 from getAllFiles import getAllFiles
 
 from dataGenerator import DataGenerator
