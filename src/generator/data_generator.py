@@ -8,11 +8,19 @@ from .preprocess_data import build_voxel_grids
 import numpy as np
 
 class DataGenerator(Sequence):
-    def __init__(self, batch_size=8, voxel_grid_dim=512, data_source='data/example_dataset', voxel_resolution=0.088):
+    def create_train_val_generators(data_source, validation_split=0.2, batch_size=8, voxel_grid_dim=512, voxel_resolution=0.088):
+        x_filenames, y_filenames = build_xy_filenames(data_source)
+
+        val_X, train_X = x_filenames[:(validation_split * len(x_filenames))], x_filenames[(validation_split * len(x_filenames)):]
+        val_Y, train_Y = y_filenames[:(validation_split * len(y_filenames))], y_filenames[(validation_split * len(y_filenames)):]
+
+        return (DataGenerator(train_X, train_Y, batch_size, voxel_grid_dim, voxel_resolution), 
+                DataGenerator(val_X, val_Y, batch_size, voxel_grid_dim, voxel_resolution))
+        
+    def __init__(self, x_filenames, y_filenames, batch_size, voxel_grid_dim, voxel_resolution):
         self.batch_size = batch_size
 
-        self.x_filenames, self.y_filenames = build_xy_filenames(data_source)
-        assert len(self.x_filenames) == len(self.y_filenames), "x and y are of different sizes."
+        self.x_filenames, self.y_filenames = x_filenames, y_filenames
 
         self.voxel_grid_dim = voxel_grid_dim
         self.voxel_resolution = voxel_resolution

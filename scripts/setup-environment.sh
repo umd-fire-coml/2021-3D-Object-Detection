@@ -8,4 +8,4 @@ echo "Activating that virtual environment"
 . venv/bin/activate
 echo "Installing all dependencies"
 pip3 install -r requirements.txt
-echo "Done!"
+echo "Done! Note that you still have to activate the virtualenv before using it. Use 'source venv/bin/activate'."
