@@ -1,11 +1,13 @@
 # 3D Object Detection
 
+# Product Description
 
+This product identifies and labels 3D Objects in images of every day settings, such as cars, trees, bikes, pedestrians, etc. 
+
+This product makes use of a UNet, which is a Convolutional Neural Network, to identify objects, given voxel data. Our product first takes point cloud data from the SemanticKITTI dataset, and converts it to voxels. For the sake of simplicity, a voxel can be described as a 3d pixel. We visualize these voxels as cubes, each cube containing spatial information in 3 dimensions.
 
 
 # Directory Guide
-
-
 
 data_generator.py
   - loads file paths of data into memory, when you call __getItem__(index) it reads the binary point cloud data and converts it to a voxel grid, and outputs the labels 
