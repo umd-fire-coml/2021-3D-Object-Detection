@@ -128,10 +128,11 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-#dataset
+dataset
 data/
 downloader/
 .bin
 
 *.zip
 *.hdf5
+.vscode
