@@ -38,11 +38,7 @@ class SemSegModelWrapper:
             steps_per_epoch=10
         )
 
-    def demo_model(self, data_gen, checkpoint):
-        print("Obtaining data point.")
-
-        data_x, data_y = data_gen[0]
-
+    def predict(self, data_point, checkpoint):
         print("Compiling model.")
         self.model.compile(optimizer=Adam(), loss="categorical_crossentropy")
 
@@ -50,6 +46,4 @@ class SemSegModelWrapper:
         assert Path(checkpoint).exists(), f"The checkpoint file {checkpoint} was not found."
         self.model.load_weights(checkpoint)
 
-        np.argmax(self.model.predict(data_x).squeeze(), axis=3)
-
-        # predictions = np.argmax(self.model.predict(data_x))
+        return np.argmax(self.model.predict(data_point).squeeze(), axis=3)
