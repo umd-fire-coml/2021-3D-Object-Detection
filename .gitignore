@@ -134,3 +134,4 @@ downloader/
 .bin
 
 *.zip
+*.hdf5

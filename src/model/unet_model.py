@@ -2,14 +2,11 @@ from tensorflow.keras.layers import MaxPooling3D, Dropout, BatchNormalization, A
 from tensorflow.keras.layers import Conv3D
 from tensorflow.keras.models import Model
 
-import tensorflow as tf
 from tensorflow.python.keras.layers.convolutional import Conv3DTranspose
 from tensorflow.python.keras.layers.merge import concatenate
 
 # tf.compat.v1.disable_eager_execution()
 
-
-from .conv_blocks import DownConvBlock, TransConvBlock
 
 def conv3d_block(input_tensor, n_filters, kernel_size = 3, batchnorm = True):
     """Function to add 2 convolutional layers with the parameters passed to it"""
@@ -69,7 +66,7 @@ def get_unet(input_img, n_filters = 16, dropout = 0.1, batchnorm = True):
     u9 = Dropout(dropout)(u9)
     c9 = conv3d_block(u9, n_filters * 1, kernel_size = 3, batchnorm = batchnorm)
     
-    outputs = Conv3D(1, (1, 1, 1), activation='sigmoid')(c9)
+    outputs = Conv3D(1, (1, 1, 1))(c9)
     model = Model(inputs=[input_img], outputs=[outputs])
     return model
 

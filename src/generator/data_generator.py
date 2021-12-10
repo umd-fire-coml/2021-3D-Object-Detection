@@ -9,11 +9,14 @@ import numpy as np
 
 class DataGenerator(Sequence):
     def create_train_val_generators(data_source, validation_split=0.2, batch_size=8, voxel_grid_dim=512, voxel_resolution=0.088):
+        print("Computing X and Y filenames.")
         x_filenames, y_filenames = build_xy_filenames(data_source)
+        split_index = int(validation_split * len(x_filenames))
 
-        val_X, train_X = x_filenames[:(validation_split * len(x_filenames))], x_filenames[(validation_split * len(x_filenames)):]
-        val_Y, train_Y = y_filenames[:(validation_split * len(y_filenames))], y_filenames[(validation_split * len(y_filenames)):]
+        val_X, train_X = x_filenames[:split_index], x_filenames[split_index:]
+        val_Y, train_Y = y_filenames[:split_index], y_filenames[split_index:]
 
+        print("Initializing data generators for data.")
         return (DataGenerator(train_X, train_Y, batch_size, voxel_grid_dim, voxel_resolution), 
                 DataGenerator(val_X, val_Y, batch_size, voxel_grid_dim, voxel_resolution))
         
@@ -61,7 +64,6 @@ class DataGenerator(Sequence):
             pcd_len = len(pcd_list)
             labels_len = len(lower_labels)
             assert pcd_len == labels_len, f"Got different labels and pcd len: {pcd_len}, {labels_len} for filenames {x_file_path}, {y_file_path}"
-            print(f"PCD Length: {len(pcd_list)}, Lower Labels Length: {len(lower_labels)}")
 
             x_batch[i, ], y_batch[i, ] = build_voxel_grids(pcd_list, lower_labels, self.voxel_grid_dim, self.voxel_resolution)
 

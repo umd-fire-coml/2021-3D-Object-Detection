@@ -1,3 +1,4 @@
+from tensorflow.python.keras.backend import sparse_categorical_crossentropy
 from .unet_model import get_unet
 from tensorflow.keras import Input
 from tensorflow.keras.optimizers import Adam
@@ -5,27 +6,43 @@ from tensorflow.keras.callbacks import ModelCheckpoint
 from pathlib import Path
 
 class SemSegModelWrapper:
-    def __init__(self):
-        self.model = get_unet(Input(shape=(512, 512, 512, 1), batch_size=8, name="X_voxel_grid"), 5)
+    def __init__(self, voxel_dim):
+        print("Constructing UNet")
+        self.model = get_unet(Input(shape=(voxel_dim, voxel_dim, voxel_dim, 1), batch_size=8, name="X_voxel_grid"), 5)
+        print("Done constructing UNet")
 
-    def train_model(self, train_gen, val_gen, checkpoints_dir, epochs):
-        self.model.compile(optimizer=Adam(), loss="binary_crossentropy")
+    def train_model(self, train_gen, val_gen, checkpoints_file, epochs):
+        print("Compiling model")
+        self.model.compile(loss="")
 
-        checkpoints_path = Path(checkpoints_dir)
         checkpoints_callback = ModelCheckpoint(
-            filepath = checkpoints_dir,
+            filepath = checkpoints_file,
             save_weights_only=True,
             save_best_only=True,
         )
         
+        checkpoints_path = Path(checkpoints_file)
         if checkpoints_path.exists():
-            files_list = list(checkpoints_path.glob())
-            if len(files_list) != 0:
-                self.model.load_weights(str(checkpoints_path / files_list[0]))
+            print(f"Found existing checkpoints file at {checkpoints_file}")
+            self.model.load_weights(str(checkpoints_path))
 
         self.model.fit(
             train_gen,
             callbacks=[checkpoints_callback],
             epochs=epochs,
-            validation_data=val_gen
+            validation_data=val_gen,
+            steps_per_epoch=10,
         )
+
+    def demo_model(self, data_gen, checkpoint):
+        print("Obtaining data point.")
+        data_point = data_gen[0][0]
+
+        print("Compiling model.")
+        self.model.compile(optimizer=Adam(), loss="categorical_crossentropy")
+
+        print("Loading weights from the checkpoint file.")
+        assert Path(checkpoint).exists(), f"The checkpoint file {checkpoint} was not found."
+        self.model.load_weights(checkpoint)
+
+        print(self.model.predict(data_point))
