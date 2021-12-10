@@ -33,37 +33,18 @@ Link to Colab Notebook that trains the model, tests the model, and then visualiz
 - `src/__main__.py`: master script - handles model training+demo, also data download and environment setup.
 - `src/visualization/__init__.py`: Registers `visualization` as a module.
 - `src/visualization/voxel_grid.py`: Displays model predictions from voxel grid.
-- 
-# Downloading the Dataset
-```
-#!/bin/bash
-if [ ! -d "data/sequences" ]; then
-    wget -c "https://s3.eu-central-1.amazonaws.com/avg-kitti/data_odometry_velodyne.zip"
-    unzip data_odometry_velodyne.zip -d data
-    wget -c "https://s3.eu-central-1.amazonaws.com/avg-kitti/data_odometry_calib.zip"
-    unzip data_odometry_calib.zip -d data
-    wget -c "http://www.semantic-kitti.org/assets/data_odometry_labels.zip"
-    unzip data_odometry_labels.zip -d data
 
-else
-    echo "Directory data/sequences already exists, so there is no need to download anything else."
-fi
-```
-
-# Setting Up The Environment
-```
-#!/bin/bash
-echo "Setting up environment"
-echo "Getting rid of any existing venv folder"
-rm -rf venv
-echo "Creating a new virtual environment"
-python3 -m venv venv
-echo "Activating that virtual environment"
-. venv/bin/activate
-echo "Installing all dependencies"
-pip3 install -r requirements.txt
-echo "Done! Note that you still have to activate the virtualenv before using it. Use 'source venv/bin/activate'."
-```
+# Getting Started
+- Start by downloading the dataset with `python3 -m src dl-data`.
+- Next, you should set up your environment with `python3 -m src setup-env`. Make sure to run `source venv/bin/activate` afterwards!
+- You can now start training the model. Run `python3 -m src train-model <data dir> <checkpoint file> <epochs> <voxel_dim>`. 
+  - For instance, you can run `python3 -m src train-model data/dataset checkpoint.hdf5 10 256`. However, do note that 
+    a 3D grid of size `<voxel_dim>` cubed will be generated, so make sure you have the RAM.
+  - A new checkpoints file will be created at the end of each epoch. Furthermore, if training crashes, you can re-run the same
+    command, and if `<checkpoint file>` exists, training will continue from that.
+- Finally, you can try out your trained model with `python3 -m src demo-model <data dir> <checkpoint file> <voxel_dim>`
+  - Make sure you have the same voxel dim as the one in the checkpoint file.
+  - For instance, you can run `python3 -m src demo-model data/dataset checkpoint.hdf5 256`.
 
 # Citations
 J. Behley, A. Milioto, C. Stachniss, M. Garbade, J. Gall, J. Quenzel, and S. Behnke, “Semantic Kitti Dataset Overview,” Semantickitti - A dataset for LIDAR-based Semantic Scene Understanding, 2020. [Online]. Available: http://www.semantic-kitti.org/dataset.html. [Accessed: 08-Dec-2021].
