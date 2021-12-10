@@ -35,7 +35,7 @@ Link to Colab Notebook that trains the model, tests the model, and then visualiz
 - `src/visualization/voxel_grid.py`: Displays model predictions from voxel grid.
 - 
 # Downloading the Dataset
-````
+```
 #!/bin/bash
 if [ ! -d "data/sequences" ]; then
     wget -c "https://s3.eu-central-1.amazonaws.com/avg-kitti/data_odometry_velodyne.zip"
