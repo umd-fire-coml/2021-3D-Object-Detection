@@ -15,7 +15,7 @@ class SemSegModelWrapper:
     def train_model(self, train_gen, val_gen, checkpoints_file, epochs):
         print("Compiling model")
         self.model.compile(
-            loss=SparseCategoricalCrossentropy(from_logits=True),
+            loss=SparseCategoricalCrossentropy(from_logits=False),
             metrics=['sparse_categorical_accuracy']
         )
 

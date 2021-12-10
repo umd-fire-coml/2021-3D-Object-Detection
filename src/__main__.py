@@ -73,7 +73,7 @@ def parse_arguments(args):
     elif next_argument == "demo-model":
         parse_demo_model(args)
     else:
-        print(f"Expected the first argument to be one of (setup-env|dl-data|train-model). Instead, got {next_argument}")
+        print(f"Expected the first argument to be one of (setup-env|dl-data|train-model|demo-model). Instead, got {next_argument}")
 
 parse_arguments(sys.argv.copy())
 
