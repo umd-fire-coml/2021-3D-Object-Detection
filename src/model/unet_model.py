@@ -66,7 +66,7 @@ def get_unet(input_img, n_filters = 16, dropout = 0.1, batchnorm = True):
     u9 = Dropout(dropout)(u9)
     c9 = conv3d_block(u9, n_filters * 1, kernel_size = 3, batchnorm = batchnorm)
     
-    outputs = Conv3D(33, (1, 1, 1))(c9)
+    outputs = Conv3D(34, (1, 1, 1))(c9)
     model = Model(inputs=[input_img], outputs=[outputs])
     return model
 
