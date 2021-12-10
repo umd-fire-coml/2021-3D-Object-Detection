@@ -46,10 +46,17 @@ def parse_demo_model(args):
     print("Now importing the generator and model code. This could take a while if it's the first time, as it needs to byte-compile.")
     from .generator.data_generator import DataGenerator
     from .model import SemSegModelWrapper
+    from .visualization import display_voxel_grid
 
     train_gen, val_gen = DataGenerator.create_train_val_generators(dataset, voxel_grid_dim=voxel_grid_dim, batch_size=1)
     model_wrapper = SemSegModelWrapper(voxel_dim=voxel_grid_dim, batch_size=1)
-    model_wrapper.demo_model(val_gen, checkpoint)
+    
+    print("Now obtaining data point.")
+    data_x, _ = val_gen[0]
+    
+    predicted_y = model_wrapper.predict(data_x, checkpoint)
+
+    display_voxel_grid(data_x, predicted_y)
 
 def parse_arguments(args):
     args.pop(0)
