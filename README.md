@@ -19,3 +19,5 @@ Velodyne.py
 Labels.py
   - Reads labels from the .label files
 
+Citations
+J. Behley, A. Milioto, C. Stachniss, M. Garbade, J. Gall, J. Quenzel, and S. Behnke, “Semantic Kitti Dataset Overview,” Semantickitti - A dataset for LIDAR-based Semantic Scene Understanding, 2020. [Online]. Available: http://www.semantic-kitti.org/dataset.html. [Accessed: 08-Dec-2021].
