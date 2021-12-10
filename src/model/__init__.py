@@ -1,11 +1,10 @@
-from tensorflow.python.keras.backend import sparse_categorical_crossentropy
-from tensorflow.python.keras.losses import CategoricalCrossentropy
 from .unet_model import get_unet
 from tensorflow.keras import Input
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint
 from pathlib import Path
 from tensorflow.keras.losses import SparseCategoricalCrossentropy
+import numpy as np
 
 class SemSegModelWrapper:
     def __init__(self, batch_size, voxel_dim):
@@ -41,7 +40,8 @@ class SemSegModelWrapper:
 
     def demo_model(self, data_gen, checkpoint):
         print("Obtaining data point.")
-        data_point = data_gen[0][0]
+
+        data_x, data_y = data_gen[0]
 
         print("Compiling model.")
         self.model.compile(optimizer=Adam(), loss="categorical_crossentropy")
@@ -50,4 +50,6 @@ class SemSegModelWrapper:
         assert Path(checkpoint).exists(), f"The checkpoint file {checkpoint} was not found."
         self.model.load_weights(checkpoint)
 
-        print(self.model.predict(data_point))
+        np.argmax(self.model.predict(data_x).squeeze(), axis=3)
+
+        # predictions = np.argmax(self.model.predict(data_x))
