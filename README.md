@@ -35,6 +35,7 @@ Link to Colab Notebook that trains the model, tests the model, and then visualiz
 - `src/visualization/voxel_grid.py`: Displays model predictions from voxel grid.
 - 
 # Downloading the Dataset
+````
 #!/bin/bash
 if [ ! -d "data/sequences" ]; then
     wget -c "https://s3.eu-central-1.amazonaws.com/avg-kitti/data_odometry_velodyne.zip"
@@ -47,8 +48,10 @@ if [ ! -d "data/sequences" ]; then
 else
     echo "Directory data/sequences already exists, so there is no need to download anything else."
 fi
+```
 
 # Setting Up The Environment
+```
 #!/bin/bash
 echo "Setting up environment"
 echo "Getting rid of any existing venv folder"
@@ -60,6 +63,7 @@ echo "Activating that virtual environment"
 echo "Installing all dependencies"
 pip3 install -r requirements.txt
 echo "Done! Note that you still have to activate the virtualenv before using it. Use 'source venv/bin/activate'."
+```
 
 # Citations
 J. Behley, A. Milioto, C. Stachniss, M. Garbade, J. Gall, J. Quenzel, and S. Behnke, “Semantic Kitti Dataset Overview,” Semantickitti - A dataset for LIDAR-based Semantic Scene Understanding, 2020. [Online]. Available: http://www.semantic-kitti.org/dataset.html. [Accessed: 08-Dec-2021].
