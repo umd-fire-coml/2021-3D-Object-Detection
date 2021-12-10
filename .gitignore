@@ -127,4 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+dataset
+data/
+downloader/
+.bin
+
+*.zip
+*.hdf5
 .vscode
