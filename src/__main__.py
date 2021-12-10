@@ -33,8 +33,8 @@ def parse_train_model(args):
     from .generator.data_generator import DataGenerator
     from .model import SemSegModelWrapper
 
-    train_gen, val_gen = DataGenerator.create_train_val_generators(dataset_dir, voxel_grid_dim=dim)
-    model_wrapper = SemSegModelWrapper(voxel_dim=dim)
+    train_gen, val_gen = DataGenerator.create_train_val_generators(dataset_dir, voxel_grid_dim=dim, batch_size=1)
+    model_wrapper = SemSegModelWrapper(voxel_dim=dim, batch_size=1)
     model_wrapper.train_model(train_gen, val_gen, checkpoints_dir, epochs)
 
 def parse_demo_model(args):
